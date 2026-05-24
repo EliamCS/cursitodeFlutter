@@ -1,16 +1,41 @@
 import 'dart:math';
 
+import 'package:first_flutter_project/util.dart';
 import 'package:flutter/material.dart';
 
 class SecondClass extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
+
     return Material(
           color: Colors.deepPurpleAccent,
-          child: Center(
-          child: Text(generateNumbers(), textDirection: TextDirection.ltr,),
+          child: Container(
+            height: 500.0,
+            width: 300.0, 
+            alignment: Alignment(0,0),
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                colors:[Colors.green, Colors.blue, Colors.orange,Colors.pink],
+                stops: [0.2,0.5,0.7,1],
+                center: Alignment(0.1, 0.3),
+                focal: Alignment(-0.1, 0.6)
+                  )
+            ),
+            //color: lightPurpleColor,
+            child: GestureDetector(
+              onTap: (){
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('It was pressed'),
+                    duration: Duration(seconds: 2),
+                ),
+                );;
+              },
+              child: Text(generateNumbers(), textDirection: TextDirection.ltr,),
+            )
+            ,
         )
-        );
+      );
   }
   
 
