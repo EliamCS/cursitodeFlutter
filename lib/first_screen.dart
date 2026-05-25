@@ -1,132 +1,123 @@
 import 'package:flutter/material.dart';
 
-class PrimeraClass extends StatefulWidget {
+class SecondClass extends StatefulWidget {
+  const SecondClass({super.key});
+
   @override
-  _PrimeraClassState createState() => new _PrimeraClassState();
+  State<SecondClass> createState() => _SecondClassState();
 }
 
-class _PrimeraClassState extends State<PrimeraClass> {
-  String maritalStatus = 'single';
+class _SecondClassState extends State<SecondClass> {
+  String maritalStatus = 'Single';
   bool termsChecked = true;
+  String? selectedLocation;
 
-  List<String> locations = ['A', 'B', 'C', 'D'];
-  String? selectedLocation; // Variable para controlar el estado del Dropdown
+  final List<String> locations = ['A', 'B', 'C', 'D'];
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         elevation: 10.0,
-        title: Center(
-          child: Text(''),
+        title:Center(child: Text('Title'),
         ),
-        actions: <Widget>[
-          Icon(Icons.settings),
+        actions:<Widget> [
+          Icon(Icons.settings), 
         ],
         // bottom: PreferredSize(
-        //   preferredSize: Size.fromHeight(40.0),
-        //   child: Text('This is a text in appbar'),
-        // ),
-      ),
-      body: Material(
-        child: SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 10.0),
-            child: Form(
-              child: Column(
-                children: <Widget>[
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Enter Name', 
-                      hintText: 'Name',
+          //     preferredSize: Size.fromHeight(40.0),
+          //   child: Text('This is a text in appbar'),
+          // ),
+        ),
+        body: Material(
+          child:SingleChildScrollView(
+            child: Container(
+              margin:EdgeInsets.symmetric(horizontal:10.0),
+              child:Form(
+                child:Column(
+                  children:<Widget> [
+                    TextFormField(
+                      maxLength: 20,
+                      decoration: InputDecoration(labelText: 'Enter Name', hintText: 'name'),
                     ),
-                  ), // TextFormField
-                  TextFormField(
-                    decoration: InputDecoration(
-                      hintText: 'Age', 
-                      labelText: 'Enter Age',
+                    TextFormField(
+                      decoration: InputDecoration(hintText: 'Age', labelText: 'Enter Age'),
+                      keyboardType: TextInputType.phone,
                     ),
-                    keyboardType: TextInputType.number,
-                  ), // TextFormField
-                  TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: 'Password', 
-                      labelText: 'Enter Password',
-                    ), // InputDecoration
-                  ), // TextFormField
-                  DropdownButton<String>(
-                    hint: Text('Please choose the city you live in'),
-                    value: selectedLocation,
-                    items: locations.map((location) {
-                      return DropdownMenuItem<String>(
-                        child: new Text(location),
-                        value: location,
-                      ); // DropdownMenuItem
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedLocation = newValue;
-                      });
-                    },
-                  ), // DropdownButton
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Expanded(
-                        child: RadioListTile<String>(
-                          title: const Text('Single'),
-                          value: 'single',
-                          groupValue: maritalStatus,
-                          onChanged: (newValue) {
-                            setState(() {
-                              maritalStatus = newValue!;
-                            });
-                          },
-                        ), // RadioListTile // Expanded
+                    TextFormField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: 'Password', labelText: 'Enter Password'),
+                    ),
+                    DropdownButton<String>(
+                      hint: const Text('Please choose the city you live in'),
+                      value: selectedLocation,
+                      items: locations.map((location) {
+                        return DropdownMenuItem<String>(
+                          value: location,
+                          child: Text(location),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedLocation = newValue;
+                        });
+                      },
+                    ),
+                    RadioGroup<String>(
+                      groupValue: maritalStatus,
+                      onChanged: (String? value) {
+                        setState(() {
+                          maritalStatus = value ?? 'Single';
+                        });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: RadioListTile<String>(
+                              title: const Text('Single'),
+                              value: 'Single',
+                            ),
+                          ),
+                          Expanded(
+                            child: RadioListTile<String>(
+                              title: const Text('Married'),
+                              value: 'Married',
+                            ),
+                          ),
+                        ],
                       ),
-                      Expanded(
-                        child: RadioListTile<String>(
-                          title: const Text('Married'),
-                          value: 'married',
-                          groupValue: maritalStatus,
-                          onChanged: (newValue) {
-                            setState(() {
-                              maritalStatus = newValue!;
-                            });
-                          },
-                        ), // RadioListTile // Expanded
-                      ),
-                    ], // <Widget>[]
-                  ), // Row
-                  CheckboxListTile(
-                    controlAffinity: ListTileControlAffinity.leading,
-                    value: termsChecked,
-                    title: new Text(
-                      'Sign up for the newspaper and related articles',
-                    ), // Text
-                    onChanged: (bool? newValue) {
-                      setState(() {
-                        termsChecked = newValue ?? false;
-                      });
-                    },
-                  ), // CheckboxListTile
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue, // color: Colors.blue
-                      foregroundColor: Colors.white, // textColor: Colors.white
                     ),
-                    onPressed: () {
-                      // Acción del botón Register
-                    },
-                    child: new Text('Register'),
-                  ), // ElevatedButton
-                ], // <Widget>[]
-              ), // Column
-            ), // Form
-          ), // Container
-        ), // SingleChildScrollView
-      ), // Material
-    ); // Scaffold
+                    CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: termsChecked,
+                      title: const Text(
+                        'Sign up for the newspaper and related articles',
+                      ),
+                      onChanged: (bool? value) {
+                        setState(() {
+                          termsChecked = value ?? false;
+                        });
+                      },
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                      ),
+                      onPressed: () {
+
+                      },
+                      child: const Text('Register'),
+                    )
+                  ],
+                      )
+                    )
+            ),
+          )
+        )
+    );
   }
 }
