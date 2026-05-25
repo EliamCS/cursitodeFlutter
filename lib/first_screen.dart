@@ -1,64 +1,132 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-class PrimeraClass extends StatefulWidget{
+class PrimeraClass extends StatefulWidget {
   @override
   _PrimeraClassState createState() => new _PrimeraClassState();
 }
 
 class _PrimeraClassState extends State<PrimeraClass> {
-  String maritalStatus = 'Single';
+  String maritalStatus = 'single';
   bool termsChecked = true;
 
-  List<String> locations = ['A','B','C','D'];
+  List<String> locations = ['A', 'B', 'C', 'D'];
+  String? selectedLocation; // Variable para controlar el estado del Dropdown
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         elevation: 10.0,
-        title:Center(child: Text('Title'),
+        title: Center(
+          child: Text(''),
         ),
         actions: <Widget>[
-          Icon(Icons.settings)
+          Icon(Icons.settings),
         ],
+        // bottom: PreferredSize(
+        //   preferredSize: Size.fromHeight(40.0),
+        //   child: Text('This is a text in appbar'),
+        // ),
       ),
       body: Material(
-        child: ListView(
-          children: <Widget>[
-            ListTile(
-              leading: Icon(Icons.ac_unit),
-              title: Text('Dog'),
-              subtitle: Text('Esto es un animal'),
-              trailing: Icon(Icons.access_time),
-            ),
-            ListTile(
-              leading: Icon(Icons.access_alarm),
-              title: Text('Cat'),
-              subtitle: Text('Esto es un animal'),
-              trailing: Icon(Icons.access_time)
-        ),
-        Padding(
-          child: Text('Dog'),
-          padding: EdgeInsetsGeometry.all(10.0),
-        ),
-        Container(
-          child: Text('Cat'),
-          margin: EdgeInsets.symmetric(horizontal: 30.0),
-          color: Colors.green,
-          padding: EdgeInsets.only(top: 20.0),
-        )
-        
-        ],
-        ),
-      ),);
-
-    String generateNumbers(){
-      var r=Random();
-      int i=r.nextInt(20);
-      return 'Un numero aleatorio entre 0 y 20 ${i}';
-    }
+        child: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 10.0),
+            child: Form(
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Enter Name', 
+                      hintText: 'Name',
+                    ),
+                  ), // TextFormField
+                  TextFormField(
+                    decoration: InputDecoration(
+                      hintText: 'Age', 
+                      labelText: 'Enter Age',
+                    ),
+                    keyboardType: TextInputType.number,
+                  ), // TextFormField
+                  TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: 'Password', 
+                      labelText: 'Enter Password',
+                    ), // InputDecoration
+                  ), // TextFormField
+                  DropdownButton<String>(
+                    hint: Text('Please choose the city you live in'),
+                    value: selectedLocation,
+                    items: locations.map((location) {
+                      return DropdownMenuItem<String>(
+                        child: new Text(location),
+                        value: location,
+                      ); // DropdownMenuItem
+                    }).toList(),
+                    onChanged: (newValue) {
+                      setState(() {
+                        selectedLocation = newValue;
+                      });
+                    },
+                  ), // DropdownButton
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Expanded(
+                        child: RadioListTile<String>(
+                          title: const Text('Single'),
+                          value: 'single',
+                          groupValue: maritalStatus,
+                          onChanged: (newValue) {
+                            setState(() {
+                              maritalStatus = newValue!;
+                            });
+                          },
+                        ), // RadioListTile // Expanded
+                      ),
+                      Expanded(
+                        child: RadioListTile<String>(
+                          title: const Text('Married'),
+                          value: 'married',
+                          groupValue: maritalStatus,
+                          onChanged: (newValue) {
+                            setState(() {
+                              maritalStatus = newValue!;
+                            });
+                          },
+                        ), // RadioListTile // Expanded
+                      ),
+                    ], // <Widget>[]
+                  ), // Row
+                  CheckboxListTile(
+                    controlAffinity: ListTileControlAffinity.leading,
+                    value: termsChecked,
+                    title: new Text(
+                      'Sign up for the newspaper and related articles',
+                    ), // Text
+                    onChanged: (bool? newValue) {
+                      setState(() {
+                        termsChecked = newValue ?? false;
+                      });
+                    },
+                  ), // CheckboxListTile
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue, // color: Colors.blue
+                      foregroundColor: Colors.white, // textColor: Colors.white
+                    ),
+                    onPressed: () {
+                      // Acción del botón Register
+                    },
+                    child: new Text('Register'),
+                  ), // ElevatedButton
+                ], // <Widget>[]
+              ), // Column
+            ), // Form
+          ), // Container
+        ), // SingleChildScrollView
+      ), // Material
+    ); // Scaffold
   }
 }
