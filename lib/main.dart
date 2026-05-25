@@ -1,3 +1,4 @@
+import 'package:first_flutter_project/first_screen.dart';
 import 'package:first_flutter_project/second_file.dart';
 import 'package:flutter/material.dart';
 
@@ -21,12 +22,12 @@ class MyClass extends StatelessWidget{
           actions: <Widget>[
             Icon(Icons.settings)
           ],
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(40.0),
-            child: Text('Esto es un texto para el appbar'),
-          ),
+         // bottom: PreferredSize(
+           // preferredSize: Size.fromHeight(40.0),
+           // child: Text('Esto es un texto para el appbar'),
+          //),
         ),
-        body: SecondClass()
+        body: PrimeraClass()
       )
     );
   }
